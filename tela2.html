@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .slider {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            overflow: hidden;
+        }
+        .slider img {
+            width: 100%;
+            display: none;
+        }
+        .slider img.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="slider" id="slider">
+        <img src="image1.jpg" class="active" alt="Image 1">
+        <img src="image2.jpg" alt="Image 2">
+        <img src="image3.jpg" alt="Image 3">
+        <img src="image4.jpg" class="active" alt="Image 1">
+        <img src="image5.jpg" alt="Image 2">
+        
+      
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        const images = document.querySelectorAll('#slider img');
+
+        function showImage(index) {
+            images.forEach((img, i) => {
+                img.classList.toggle('active', i === index);
+            });
+        }
+
+        function handleTouchStart(event) {
+            yStart = event.touches[0].clientY;
+        }
+
+        function handleTouchMove(event) {
+            if (!yStart) {
+                return;
+            }
+
+            const yEnd = event.touches[0].clientY;
+            const yDiff = yStart - yEnd;
+
+            if (Math.abs(yDiff) > 50) {
+                if (yDiff > 0) {
+                    // Swipe up
+                    currentIndex = (currentIndex + 1) % images.length;
+                } else {
+                    // Swipe down
+                    currentIndex = (currentIndex - 1 + images.length) % images.length;
+                }
+                showImage(currentIndex);
+                yStart = null;
+            }
+        }
+
+        let yStart = null;
+        const slider = document.getElementById('slider');
+        slider.addEventListener('touchstart', handleTouchStart, false);
+        slider.addEventListener('touchmove', handleTouchMove, false);
+    </script>
+
+<script type='text/javascript' src='//pl23882163.highrevenuenetwork.com/17/e4/e1/17e4e1612ffdc4984ec3e41010ec284a.js'></script>
+</body>
+</html>
